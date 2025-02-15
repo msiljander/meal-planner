@@ -78,21 +78,27 @@ class MealPlanner:
 # Streamlit UI
 st.title("Meal Planner App")
 
-protein_input = st.text_input("Enter protein sources (comma-separated)")
-fat_input = st.text_input("Enter healthy fats (comma-separated)")
-fiber_input = st.text_input("Enter fiber-rich foods (comma-separated)")
-filter_input = st.text_input("Enter dietary filters (comma-separated)")
-side_input = st.text_input("Enter side dishes (comma-separated)")
+protein_options = ["Chicken", "Beef", "Tofu", "Fish", "Eggs", "Lentils"]
+fat_options = ["Avocado", "Olive Oil", "Nuts", "Seeds", "Cheese"]
+fiber_options = ["Broccoli", "Oats", "Beans", "Chia Seeds", "Flaxseeds"]
+dietary_options = ["Gluten-Free", "Vegan", "Keto", "Paleo"]
+side_dish_options = ["Spinach", "Carrots", "Kale", "Cucumber", "Bell Peppers"]
+
+selected_proteins = st.multiselect("Select protein sources:", protein_options)
+selected_fats = st.multiselect("Select healthy fats:", fat_options)
+selected_fibers = st.multiselect("Select fiber-rich foods:", fiber_options)
+selected_filters = st.multiselect("Select dietary filters:", dietary_options)
+selected_sides = st.multiselect("Select side dishes:", side_dish_options)
 
 planner = MealPlanner()
 
 if st.button("Generate Meal Plan"):
     planner.set_preferences(
-        protein_input.split(','),
-        fat_input.split(','),
-        fiber_input.split(','),
-        filter_input.split(','),
-        side_input.split(',')
+        selected_proteins,
+        selected_fats,
+        selected_fibers,
+        selected_filters,
+        selected_sides
     )
     meal_plan = planner.generate_meal_plan()
     side_dishes = planner.get_side_dishes()
